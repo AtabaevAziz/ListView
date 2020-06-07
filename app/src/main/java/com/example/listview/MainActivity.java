@@ -2,33 +2,41 @@ package com.example.listview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.R.layout.simple_list_item_1;
-
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = findViewById(R.id.listView);
+        ListView colorsListView = findViewById(R.id.colorsListView);
+        final ArrayList<String> colorsArrayList = new ArrayList<>();
+        colorsArrayList.add("Красный");
+        colorsArrayList.add("Оранжевый");
+        colorsArrayList.add("Желтый");
+        colorsArrayList.add("Зеленый");
+        colorsArrayList.add("Голубой");
+        colorsArrayList.add("Синий");
+        colorsArrayList.add("Фиолетовый");
 
-        ArrayList<String> posts = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            posts.add("Post " + i);
-            Log.i("posts: ", posts.get(i));
-        }
+        final ArrayAdapter<String> colorsArrayAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, colorsArrayList);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, simple_list_item_1, posts);
-
-        listView.setAdapter(arrayAdapter);
-
+        colorsListView.setAdapter(colorsArrayAdapter);
+        colorsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Номер" + position +
+                        " - " + colorsArrayList.get(position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
